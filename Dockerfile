@@ -1,11 +1,10 @@
-FROM ubuntu as docker-tutorial
+FROM maven:3.6.3-jdk-8-slim
 
-RUN apt-get update
-RUN apt-get upgrade
-RUN apt-get install git
+RUN apt-get update && \
+    apt-get install git -y
 
-ARG USERNAME=EugeneRybalko
-ARG PASSWORD=jenya26032000
-ARG GIT_REPO=dockertutorial
+ENV USERNAME username
+ENV PASSWORD password
+ENV GIT_ENDPOINT repository
 
-RUN git clone https://${USERNAME}:${PASSWORD}@github.com/${USERNAME}/${GIT_REPO}.git
+ENTRYPOINT git clone https://${USERNAME}:${PASSWORD}@github.com/${USERNAME}/${GIT_ENDPOINT}.git
