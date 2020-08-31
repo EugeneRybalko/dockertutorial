@@ -1,9 +1,11 @@
-FROM 3.6.3-jdk-8-slim
+FROM ubuntu as docker-tutorial
 
-RUN apt-get update \
-    apt-get upgrade \
-    apt-get install git
+RUN apt-get update
+RUN apt-get upgrade
+RUN apt-get install git
 
+ARG USERNAME=EugeneRybalko
+ARG PASSWORD=jenya26032000
+ARG GIT_REPO=dockertutorial
 
-
-RUN git clone https://${USERNAME}:${PASSWORD}@github.com/${PATH_TO_GIT}.git
+RUN git clone https://${USERNAME}:${PASSWORD}@github.com/${USERNAME}/${GIT_REPO}.git
