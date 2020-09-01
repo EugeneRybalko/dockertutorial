@@ -6,5 +6,10 @@ RUN apt-get update && \
 ENV USERNAME username
 ENV PASSWORD password
 ENV GIT_ENDPOINT repository
+ENV WORKSPACE workspace/scripts
 
-ENTRYPOINT git clone https://${USERNAME}:${PASSWORD}@github.com/${USERNAME}/${GIT_ENDPOINT}.git
+RUN mkdir -p ${WORKSPACE}
+
+COPY entry.sh ${WORKSPACE}
+
+ENTRYPOINT ./workspace/scripts/entry.sh pullContentAndBuild
