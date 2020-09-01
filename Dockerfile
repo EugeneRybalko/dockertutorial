@@ -6,10 +6,12 @@ RUN apt-get update && \
 ENV USERNAME username
 ENV PASSWORD password
 ENV GIT_ENDPOINT repository
-ENV WORKSPACE workspace/scripts
+ENV SCRIPTS_PATH workspace/scripts
 
-RUN mkdir -p ${WORKSPACE}
+RUN mkdir -p ${SCRIPTS_PATH}
 
-COPY entry.sh ${WORKSPACE}
+COPY entry.sh ${SCRIPTS_PATH}/entry.sh
+RUN chmod +x ${SCRIPTS_PATH}/entry.sh
 
-ENTRYPOINT ./workspace/scripts/entry.sh pullContentAndBuild
+ENTRYPOINT ["/workspace/scripts/entry.sh"]
+CMD ["pullContentAndBuild"]
