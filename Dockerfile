@@ -13,5 +13,4 @@ RUN mkdir -p ${SCRIPTS_PATH}
 COPY entry.sh ${SCRIPTS_PATH}/entry.sh
 RUN chmod +x ${SCRIPTS_PATH}/entry.sh
 
-ENTRYPOINT ["/workspace/scripts/entry.sh"]
-CMD ["pullContentAndBuild"]
+CMD ["bin/bash","/workspace/scripts/entry.sh", "pullContentAndBuild"]
