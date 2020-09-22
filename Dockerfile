@@ -1,16 +1,16 @@
-FROM maven:3.6.3-jdk-8-slim
+FROM eugeniao/docker-er:tutor1
 
-RUN apt-get update && \
-    apt-get install git -y
+RUN apt-get -y install wget && \
+    mkdir /usr/local/tomcat && \
+    wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.8/bin/apache-tomcat-9.0.8.tar.gz -O /tmp/tomcat.tar.gz && \
+    cd /tmp && tar xvfz tomcat.tar.gz && \
+    cp -Rv /tmp/apache-tomcat-9.0.8/* /usr/local/tomcat/
 
-ENV USERNAME username
-ENV PASSWORD password
-ENV GIT_ENDPOINT repository
-ENV SCRIPTS_PATH workspace/scripts
+EXPOSE 8080
+VOLUME /archive
+COPY deploy.sh /workspace/scripts
+COPY buildDeploy.sh /workspace/scripts
+WORKDIR /workspace/scripts
 
-RUN mkdir -p ${SCRIPTS_PATH}
-
-COPY entry.sh ${SCRIPTS_PATH}/entry.sh
-RUN chmod +x ${SCRIPTS_PATH}/entry.sh
-
-CMD ["bin/bash","/workspace/scripts/entry.sh", "pullContentAndBuild"]
+ENTRYPOINT ["/bin/bash"]
+CMD ["buildDeploy.sh"]
